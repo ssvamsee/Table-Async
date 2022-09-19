@@ -1,0 +1,68 @@
+<html>
+<head>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        table{
+            border-collapse: collapse;
+            text-align: center;
+            width: 100%;
+        }
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }
+        th, td{
+            border: 1px solid #ddd;
+
+        }
+        tr:nth-child(even){background-color: #f2f2f2;}
+        tr:hover {background-color: #ddd;}
+
+    </style>
+
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Rating count</th>
+            <th>Rate</th>
+            <th>Title</th>
+
+
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+    <script>
+        (
+            function () {
+                var tbody = document.getElementById("tbody");
+                var http = new XMLHttpRequest();
+                http.open('get', "https://fakestoreapi.com/products");
+                http.send();
+                http.onreadystatechange = function () {
+                    console.log(http.readyState);
+                    if (http.readyState == 4) {
+                        var products = JSON.parse(http.responseText);
+                        console.log(products);
+                        var items = "";
+                        for (var i = 0; i < products.length; i++) {
+                            var product = products[i];
+                            items += "<tr><td style=width:50px>" + product.id + "</td>" + "<td style=width:150px>" + product.category + "</td>" +"<td style=width:900px>" + product.description + "</td>"+"<td>" + "<img style=width:150px;height:150px;padding:5px src=" + product.image + ">"+"</td>"+"<td>" + product.price + "</td>"+ "<td>" + product.rating.count + "</td>"+"<td>" + product.rating.rate + "</td>"+"<td>" + product.title + "</td></tr>"
+                        }
+                        tbody.innerHTML = items;
+                    }
+                }
+            }
+        )();
+    </script>
+</body>
+</html>
